@@ -1,0 +1,59 @@
+[System]
+Name='fuzzy_system'
+Type='mamdani'
+Version=2.0
+NumInputs=4
+NumOutputs=1
+NumRules=6
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='NTOTAL'
+Range=[0 1024]
+NumMFs=3
+MF1='safe':'trimf',[-400 0 400]
+MF2='shadiness':'trimf',[100 400 800]
+MF3='dangerous':'trimf',[400 1020 1450]
+
+[Input2]
+Name='MAX8'
+Range=[0 1]
+NumMFs=3
+MF1='safe':'trimf',[-0.6 0 0.6]
+MF2='shadiness':'trimf',[0.08333 0.6 0.9167]
+MF3='dangerous':'trimf',[0.5833 1 1.417]
+
+[Input3]
+Name='BIN05'
+Range=[0 1024]
+NumMFs=3
+MF1='dangerous':'trimf',[-450 0 450]
+MF2='shadiness':'trimf',[85.33 512 938.7]
+MF3='safe':'trimf',[450 1024 1590]
+
+[Input4]
+Name='BIN08'
+Range=[0 1024]
+NumMFs=3
+MF1='safe':'trimf',[-300 0 300]
+MF2='shadiness':'trimf',[0 180 695]
+MF3='dangerous':'trapmf',[150 565 1024 1024]
+
+[Output1]
+Name='output1'
+Range=[0 1]
+NumMFs=2
+MF1='total-safe':'trapmf',[-0.375 -0.0417 0.293 0.6836]
+MF2='total-dangerous':'trapmf',[0.293 0.6836 1.038 1.374]
+
+[Rules]
+1 1 3 1, 1 (1) : 1
+2 2 2 2, 2 (1) : 1
+3 3 1 3, 2 (1) : 1
+-3 -3 -1 -3, -2 (1) : 1
+-1 -1 -3 -1, -1 (1) : 1
+-1 -1 -3 -1, -1 (1) : 2
